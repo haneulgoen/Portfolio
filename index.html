@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김하늘 — Fashion Portfolio 2026</title>
+<meta name="description" content="의류학과 김하늘의 패션 포트폴리오. 업사이클링, 니트웨어, 테일러링과 스타일링 작업을 소개합니다.">
+<style>
+  :root{
+    --ink:#0A0A0A;
+    --paper:#F3EFE6;
+    --violet:#B388FF;
+    --orange:#FF4D2E;
+    --muted:rgba(10,10,10,.55);
+    --line:rgba(10,10,10,.16);
+    --pad:clamp(1.25rem,4vw,4.5rem);
+    --sans:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Helvetica Neue",Arial,sans-serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;scroll-padding-top:5rem;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  body.no-scroll{overflow:hidden;}
+
+  ::selection{background:var(--violet);color:var(--ink);}
+
+  a{color:inherit;}
+
+  img,svg{display:block;max-width:100%;}
+
+  .skip{
+    position:absolute;left:1rem;top:-4rem;
+    background:var(--ink);color:var(--paper);
+    padding:.75rem 1.25rem;z-index:400;text-decoration:none;
+    border-radius:.25rem;transition:top .2s;
+  }
+  .skip:focus{top:1rem;}
+
+  .grain{
+    position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem var(--pad);
+    background:rgba(10,10,10,.72);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(243,239,230,.12);
+    color:var(--paper);
+    pointer-events:none;
+  }
+  .nav a{pointer-events:auto;}
+  .brand{
+    font-weight:900;letter-spacing:-.02em;font-size:1.05rem;
+    text-decoration:none;display:inline-flex;align-items:baseline;gap:.15rem;
+  }
+  .brand span{font-size:.6rem;font-weight:600;opacity:.7;}
+  .nav nav{display:flex;gap:clamp(.9rem,2.4vw,2.2rem);}
+  .nav nav a{
+    text-decoration:none;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    padding-bottom:.2rem;border-bottom:1px solid transparent;transition:border-color .2s;
+  }
+  .nav nav a:hover,.nav nav a:focus-visible{border-color:currentColor;}
+
+  .hero{
+    position:relative;min-height:100svh;
+    background:var(--ink);color:var(--paper);
+    padding:5.5rem var(--pad) 0;
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;right:-18vw;top:-10vw;
+    width:60vw;height:60vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(179,136,255,.26),transparent 65%);
+    pointer-events:none;
+  }
+  .hero-top{
+    position:relative;
+    display:flex;justify-content:space-between;gap:1rem;
+    font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;opacity:.7;
+  }
+  .hero-center{position:relative;margin:auto 0;padding:clamp(2rem,6vw,4rem) 0;}
+  .hero-title{
+    margin:0;
+    font-size:clamp(3.6rem,16.5vw,17rem);
+    line-height:.8;letter-spacing:-.055em;font-weight:900;
+    text-transform:uppercase;
+  }
+  .hero-title .outline{
+    color:transparent;
+    -webkit-text-stroke:2px var(--paper);
+  }
+  .hero-sub{
+    margin:clamp(1.5rem,3vw,2.5rem) 0 0;
+    max-width:34ch;font-size:clamp(.95rem,1.5vw,1.2rem);
+    line-height:1.65;opacity:.85;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    margin-top:1.75rem;padding:.5rem .9rem;
+    border:1px solid rgba(243,239,230,.4);border-radius:999px;
+    font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .badge::before{
+    content:"";width:.45rem;height:.45rem;border-radius:50%;
+    background:var(--violet);animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+  .scroll-cue{
+    position:relative;
+    display:inline-flex;align-items:center;gap:.75rem;
+    text-decoration:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    margin-bottom:clamp(1.5rem,4vw,2.5rem);
+  }
+  .scroll-cue .arrow{animation:bob 1.8s ease-in-out infinite;font-size:1rem;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+  .marquee{
+    position:relative;margin:0 calc(var(--pad) * -1);
+    background:var(--violet);color:var(--ink);
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    overflow:hidden;padding:.85rem 0;
+  }
+  .marquee-track{display:flex;width:max-content;animation:marquee 24s linear infinite;}
+  .marquee-group{display:flex;align-items:center;gap:1.6rem;padding-right:1.6rem;}
+  .marquee-group span{
+    font-weight:900;text-transform:uppercase;letter-spacing:.06em;
+    font-size:clamp(.85rem,1.5vw,1.25rem);white-space:nowrap;
+  }
+  .marquee-group span:nth-child(even){font-weight:400;opacity:.5;}
+  @keyframes marquee{to{transform:translateX(-50%);}}
+
+  .section{padding:clamp(4rem,9vw,8rem) var(--pad);border-top:1px solid var(--line);}
+
+  .section-head{
+    display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;
+    gap:clamp(.75rem,2vw,1.5rem);
+    margin-bottom:clamp(2.5rem,6vw,5rem);
+    padding-bottom:1rem;border-bottom:2px solid var(--ink);
+  }
+  .section-head .index{font-size:clamp(1.2rem,2.4vw,1.8rem);font-weight:900;letter-spacing:-.03em;}
+  .section-head h2{
+    margin:0;font-size:clamp(2.2rem,7vw,6rem);line-height:.9;
+    font-weight:900;letter-spacing:-.045em;text-transform:uppercase;
+  }
+  .section-head .head-note{
+    font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;opacity:.5;
+    text-align:right;
+  }
+
+  .about-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;
+    gap:clamp(2.5rem,6vw,6rem);align-items:start;
+  }
+  .lead{
+    margin:0;font-size:clamp(1.35rem,2.7vw,2.05rem);
+    line-height:1.5;font-weight:650;letter-spacing:-.02em;
+  }
+  .lead strong{background:var(--violet);padding:0 .12em;font-weight:900;}
+  .about-text p:not(.lead){
+    margin:1.4rem 0 0;max-width:48ch;
+    font-size:1rem;line-height:1.85;color:rgba(10,10,10,.78);
+  }
+  .tags{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:2.25rem 0 0;padding:0;}
+  .tags li{
+    border:1px solid var(--ink);border-radius:999px;
+    padding:.5rem 1rem;font-size:.78rem;letter-spacing:.02em;
+    transition:background .2s,color .2s;
+  }
+  .tags li:hover{background:var(--ink);color:var(--violet);}
+
+  .portrait{margin:0;position:relative;}
+  .portrait svg{
+    width:100%;height:auto;border:2px solid var(--ink);
+    box-shadow:14px 14px 0 var(--orange);
+  }
+  .portrait figcaption{
+    margin-top:1.1rem;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;opacity:.55;
+  }
+
+  .work-grid{
+    display:grid;grid-template-columns:repeat(12,1fr);
+    gap:clamp(1.25rem,3vw,2.75rem);
+  }
+  .work-card{
+    margin:0;grid-column:span 7;cursor:pointer;position:relative;
+    outline-offset:6px;
+  }
+  .work-card.w-5{grid-column:span 5;}
+  .work-card.offset{margin-top:clamp(2rem,7vw,7rem);}
+  .work-media{
+    overflow:hidden;border:2px solid var(--ink);
+    background:var(--ink);aspect-ratio:4/3;
+  }
+  .work-card.w-5 .work-media{aspect-ratio:3/4;}
+  .work-media svg{
+    width:100%;height:100%;
+    transition:transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .work-card:hover .work-media svg,
+  .work-card:focus-visible .work-media svg{transform:scale(1.05);}
+  .work-card figcaption{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    margin-top:.9rem;font-size:.78rem;letter-spacing:.03em;
+  }
+  .work-card figcaption b{text-transform:uppercase;letter-spacing:.08em;font-weight:800;}
+  .work-card figcaption span{color:var(--muted);text-align:right;font-size:.72rem;}
+
+  .skill-list{border-top:2px solid var(--ink);}
+  .skill-row{
+    display:grid;grid-template-columns:3.5rem 1fr auto;align-items:center;
+    gap:1rem;padding:clamp(1rem,2.4vw,1.6rem) .5rem;
+    border-bottom:1px solid rgba(10,10,10,.22);
+    transition:background .25s,color .25s,padding-left .25s;
+  }
+  .skill-row:hover{background:var(--ink);color:var(--violet);padding-left:1.4rem;}
+  .skill-no{font-size:.75rem;letter-spacing:.12em;opacity:.55;}
+  .skill-name{
+    font-size:clamp(1.25rem,3.2vw,2.1rem);
+    font-weight:850;letter-spacing:-.025em;
+  }
+  .skill-note{
+    font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    opacity:.55;text-align:right;
+  }
+
+  .timeline{
+    border-left:2px solid var(--ink);margin-left:.45rem;
+    display:flex;flex-direction:column;
+  }
+  .timeline-item{
+    position:relative;display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;
+    padding:0 0 clamp(1.75rem,4vw,2.75rem) clamp(1.5rem,3.5vw,2.5rem);
+  }
+  .timeline-item:last-child{padding-bottom:0;}
+  .timeline-item::before{
+    content:"";position:absolute;left:-7px;top:.45rem;
+    width:12px;height:12px;border-radius:50%;background:var(--ink);
+  }
+  .timeline-year{font-weight:900;font-size:.9rem;letter-spacing:.05em;}
+  .timeline-desc h3{margin:0 0 .4rem;font-size:clamp(1.05rem,2vw,1.35rem);font-weight:800;letter-spacing:-.01em;}
+  .timeline-desc p{margin:0;font-size:.93rem;line-height:1.7;color:rgba(10,10,10,.7);max-width:52ch;}
+
+  .contact{
+    background:var(--violet);
+    border-top:2px solid var(--ink);
+  }
+  .contact .section-head{border-bottom-color:var(--ink);}
+  .contact .head-note{opacity:.6;}
+  .contact-kicker{
+    margin:0 0 clamp(1.5rem,4vw,2.5rem);
+    font-size:clamp(1.1rem,2.4vw,1.7rem);font-weight:700;letter-spacing:-.01em;
+  }
+  .mail{
+    display:inline-block;text-decoration:none;
+    font-size:clamp(1.5rem,6.4vw,5.5rem);
+    font-weight:900;letter-spacing:-.045em;line-height:1.05;
+    border-bottom:4px solid var(--ink);
+    word-break:break-word;
+    transition:background .25s,color .25s;
+  }
+  .mail:hover,.mail:focus-visible{background:var(--ink);color:var(--violet);}
+  .socials{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:clamp(2rem,5vw,3.5rem);}
+  .socials a{
+    text-decoration:none;border:2px solid var(--ink);
+    padding:.75rem 1.25rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    transition:background .2s,color .2s;
+  }
+  .socials a:hover,.socials a:focus-visible{background:var(--ink);color:var(--violet);}
+  .contact-note{
+    margin:clamp(2.5rem,6vw,4.5rem) 0 0;
+    max-width:42ch;font-size:.95rem;line-height:1.7;opacity:.65;
+  }
+
+  .to-top-bar{
+    background:var(--paper);
+    padding:clamp(2rem,5vw,3.5rem) var(--pad);
+    border-top:1px solid var(--line);
+  }
+  .to-top{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    text-decoration:none;border:2px solid var(--ink);
+    padding:clamp(1rem,2.5vw,1.6rem) clamp(1.25rem,3vw,2rem);
+    font-size:clamp(1.05rem,2.4vw,1.7rem);font-weight:850;letter-spacing:-.01em;
+    transition:background .25s,color .25s,border-color .25s;
+  }
+  .to-top-arrow{font-size:clamp(1.2rem,2.8vw,1.9rem);transition:transform .25s;}
+  .to-top:hover,.to-top:focus-visible{background:var(--ink);color:var(--violet);}
+  .to-top:hover .to-top-arrow{transform:translateY(-.25rem);}
+
+  .footer{
+    background:var(--ink);color:var(--paper);
+    padding:1.75rem var(--pad);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  }
+  .footer a{text-decoration:none;border-bottom:1px solid currentColor;opacity:.8;}
+  .footer a:hover{opacity:1;}
+
+  .lightbox{
+    position:fixed;inset:0;z-index:300;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(2.5rem,6vw,4.5rem);
+    background:rgba(10,10,10,.95);color:var(--paper);
+    opacity:0;visibility:hidden;transition:opacity .3s ease;
+  }
+  .lightbox.is-open{opacity:1;visibility:visible;}
+  .lightbox-body{width:min(92vw,70vh);display:flex;justify-content:center;}
+  .lightbox-body svg{
+    width:100%;height:auto;max-height:66vh;
+    border:2px solid var(--violet);
+  }
+  .lightbox-caption{
+    margin-top:1.25rem;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;text-align:center;opacity:.8;
+  }
+  .lightbox-close{
+    position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);
+    width:3rem;height:3rem;border-radius:50%;
+    background:transparent;border:2px solid var(--paper);color:var(--paper);
+    font-size:1.1rem;line-height:1;cursor:pointer;
+    transition:background .2s,color .2s;
+  }
+  .lightbox-close:hover,.lightbox-close:focus-visible{background:var(--paper);color:var(--ink);}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.is-visible{opacity:1;transform:none;}
+
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;}
+    .portrait{max-width:26rem;}
+    .work-card,.work-card.w-5{grid-column:span 12;}
+    .work-card.offset{margin-top:0;}
+  }
+
+  @media (max-width:640px){
+    .nav{padding-left:1rem;padding-right:1rem;}
+    .nav nav{gap:.55rem;}
+    .nav nav a{font-size:.56rem;letter-spacing:.04em;}
+    .brand{font-size:.95rem;}
+    .section-head{grid-template-columns:auto 1fr;row-gap:.35rem;}
+    .section-head .head-note{grid-column:2;text-align:left;}
+    .skill-row{grid-template-columns:2.5rem 1fr;}
+    .skill-note{grid-column:2;text-align:left;margin-top:-.35rem;}
+    .timeline-item{grid-template-columns:1fr;gap:.35rem;}
+    .timeline-year{font-size:.82rem;}
+    .hero-top{font-size:.62rem;letter-spacing:.12em;}
+    .work-card figcaption{flex-direction:column;gap:.2rem;}
+    .work-card figcaption span{text-align:left;}
+    .footer{flex-direction:column;align-items:flex-start;font-size:.62rem;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+<noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="#top">HANEUL<span>®</span></a>
+  <nav aria-label="주요 섹션">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section id="top" class="hero">
+    <div class="hero-top">
+      <span>의류학과 · 패션 디자인</span>
+      <span>Portfolio 2026</span>
+    </div>
+
+    <div class="hero-center">
+      <h1 class="hero-title">KIM<br><span class="outline">HANEUL</span></h1>
+      <p class="hero-sub">옷을 짓고, 이야기를 엮습니다.<br>소재와 사람 사이의 감각을 디자인합니다.</p>
+      <span class="badge">Open to collaboration · 2026</span>
+    </div>
+
+    <a class="scroll-cue" href="#about"><span>Scroll</span><span class="arrow" aria-hidden="true">↓</span></a>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Fashion</span><span>·</span><span>Textile</span><span>·</span><span>Styling</span><span>·</span><span>Sustainability</span><span>·</span>
+        </div>
+        <div class="marquee-group">
+          <span>Fashion</span><span>·</span><span>Textile</span><span>·</span><span>Styling</span><span>·</span><span>Sustainability</span><span>·</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section about">
+    <div class="section-head reveal">
+      <span class="index">01</span>
+      <h2>About</h2>
+      <span class="head-note">Who I Am</span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="lead">안녕하세요, <strong>김하늘</strong>입니다.<br>버려지는 소재에서 가능성을 찾는 의류학과 4학년입니다.</p>
+        <p>데님 한 조각이 다시 옷이 되는 과정, 오래 입을수록 멋이 깊어지는 니트의 구조에 끌립니다. 패턴과 봉제라는 손의 언어로 옷을 짓고, 그 위에 스타일링이라는 이야기를 얹습니다.</p>
+        <p>지금은 제로웨이스트 패턴 설계와 업사이클링 소재 연구를 중심으로 작업합니다. 좋은 옷은 유행보다 오래 남는다고 믿습니다.</p>
+        <ul class="tags" aria-label="관심 분야">
+          <li>지속가능 패션</li>
+          <li>업사이클링</li>
+          <li>니트웨어</li>
+          <li>테일러링</li>
+          <li>패션 스타일링</li>
+          <li>제로웨이스트 패턴</li>
+        </ul>
+      </div>
+
+      <figure class="portrait reveal">
+        <svg viewBox="0 0 700 900" role="img" aria-label="김하늘 프로필 이미지 자리">
+          <rect width="700" height="900" fill="#E9E3D6"/>
+          <rect x="470" y="60" width="160" height="160" fill="#B388FF"/>
+          <circle cx="350" cy="300" r="150" fill="#0A0A0A"/>
+          <path d="M150 900 C150 650 250 545 350 545 C450 545 550 650 550 900 Z" fill="#FF4D2E"/>
+          <path d="M280 300 Q350 250 420 300" fill="none" stroke="#F3EFE6" stroke-width="10" stroke-linecap="round"/>
+          <text x="50" y="850" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="24" letter-spacing="8">PORTRAIT / 2026</text>
+        </svg>
+        <figcaption>김하늘 · 의류학과 22학번</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="work" class="section work">
+    <div class="section-head reveal">
+      <span class="index">02</span>
+      <h2>Selected Works</h2>
+      <span class="head-note">2024 — 2025</span>
+    </div>
+
+    <div class="work-grid">
+      <figure class="work-card w-7 reveal" tabindex="0" role="button" aria-label="Second Skin 작품 크게 보기" data-title="Second Skin" data-desc="Upcycled Denim Jacket · 2025">
+        <div class="work-media">
+          <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="1200" height="900" fill="#0A0A0A"/>
+            <circle cx="880" cy="330" r="300" fill="#FF4D2E"/>
+            <rect x="-100" y="620" width="1400" height="110" fill="#B388FF" transform="rotate(-8 600 675)"/>
+            <text x="60" y="120" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="22" letter-spacing="6">WORK 01 / 2025</text>
+            <rect x="45" y="742" width="780" height="114" fill="#0A0A0A"/>
+            <text x="60" y="815" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">SECOND SKIN</text>
+          </svg>
+        </div>
+        <figcaption><b>Second Skin</b><span>Upcycled Denim Jacket · 2025</span></figcaption>
+      </figure>
+
+      <figure class="work-card w-5 offset reveal" tabindex="0" role="button" aria-label="Soft Armor 작품 크게 보기" data-title="Soft Armor" data-desc="Knit Armor Dress · 2025">
+        <div class="work-media">
+          <svg viewBox="0 0 900 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="900" height="1200" fill="#B388FF"/>
+            <circle cx="450" cy="520" r="330" fill="none" stroke="#0A0A0A" stroke-width="90"/>
+            <rect x="600" y="120" width="220" height="220" fill="#FF4D2E"/>
+            <text x="60" y="120" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="24" letter-spacing="6">WORK 02 / 2025</text>
+            <text x="60" y="1070" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4">SOFT</text>
+            <text x="60" y="1155" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4">ARMOR</text>
+          </svg>
+        </div>
+        <figcaption><b>Soft Armor</b><span>Knit Armor Dress · 2025</span></figcaption>
+      </figure>
+
+      <figure class="work-card w-5 reveal" tabindex="0" role="button" aria-label="Paper Pattern 작품 크게 보기" data-title="Paper Pattern" data-desc="Draping Experiment · 2024">
+        <div class="work-media">
+          <svg viewBox="0 0 900 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="900" height="1200" fill="#FF4D2E"/>
+            <g stroke="#F3EFE6" stroke-width="24" opacity=".85">
+              <line x1="120" y1="0" x2="120" y2="1200"/>
+              <line x1="260" y1="0" x2="260" y2="1200"/>
+              <line x1="400" y1="0" x2="400" y2="1200"/>
+              <line x1="540" y1="0" x2="540" y2="1200"/>
+              <line x1="680" y1="0" x2="680" y2="1200"/>
+            </g>
+            <circle cx="450" cy="500" r="260" fill="#0A0A0A"/>
+            <circle cx="450" cy="500" r="110" fill="#B388FF"/>
+            <text x="60" y="120" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="24" letter-spacing="6">WORK 03 / 2024</text>
+            <text x="60" y="1080" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="86" font-weight="900" letter-spacing="-3">PAPER</text>
+            <text x="60" y="1165" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="86" font-weight="900" letter-spacing="-3">PATTERN</text>
+          </svg>
+        </div>
+        <figcaption><b>Paper Pattern</b><span>Draping Experiment · 2024</span></figcaption>
+      </figure>
+
+      <figure class="work-card w-7 reveal" tabindex="0" role="button" aria-label="After Hours 작품 크게 보기" data-title="After Hours" data-desc="Styling Editorial · 2025">
+        <div class="work-media">
+          <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="1200" height="900" fill="#F3EFE6"/>
+            <g stroke="#0A0A0A" stroke-width="2" opacity=".22">
+              <line x1="150" y1="0" x2="150" y2="900"/>
+              <line x1="300" y1="0" x2="300" y2="900"/>
+              <line x1="450" y1="0" x2="450" y2="900"/>
+              <line x1="600" y1="0" x2="600" y2="900"/>
+              <line x1="750" y1="0" x2="750" y2="900"/>
+              <line x1="900" y1="0" x2="900" y2="900"/>
+              <line x1="1050" y1="0" x2="1050" y2="900"/>
+              <line x1="0" y1="225" x2="1200" y2="225"/>
+              <line x1="0" y1="450" x2="1200" y2="450"/>
+              <line x1="0" y1="675" x2="1200" y2="675"/>
+            </g>
+            <circle cx="900" cy="400" r="210" fill="#0A0A0A"/>
+            <circle cx="900" cy="400" r="85" fill="#B388FF"/>
+            <rect x="90" y="150" width="240" height="240" fill="#FF4D2E"/>
+            <text x="60" y="120" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="22" letter-spacing="6">WORK 04 / 2025</text>
+            <text x="60" y="810" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">AFTER HOURS</text>
+          </svg>
+        </div>
+        <figcaption><b>After Hours</b><span>Styling Editorial · 2025</span></figcaption>
+      </figure>
+
+      <figure class="work-card w-7 offset reveal" tabindex="0" role="button" aria-label="Zero Waste 작품 크게 보기" data-title="Zero Waste" data-desc="Pattern Study · 2024">
+        <div class="work-media">
+          <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="1200" height="900" fill="#0A0A0A"/>
+            <g fill="#B388FF" opacity=".92" transform="rotate(-18 600 450)">
+              <rect x="-300" y="180" width="1800" height="46"/>
+              <rect x="-300" y="360" width="1800" height="46"/>
+              <rect x="-300" y="540" width="1800" height="46"/>
+              <rect x="-300" y="720" width="1800" height="46"/>
+            </g>
+            <circle cx="940" cy="250" r="150" fill="#FF4D2E"/>
+            <text x="60" y="120" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="22" letter-spacing="6">WORK 05 / 2024</text>
+            <rect x="45" y="742" width="760" height="114" fill="#0A0A0A"/>
+            <text x="60" y="815" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">ZERO WASTE</text>
+          </svg>
+        </div>
+        <figcaption><b>Zero Waste</b><span>Pattern Study · 2024</span></figcaption>
+      </figure>
+
+      <figure class="work-card w-5 reveal" tabindex="0" role="button" aria-label="Quiet Riot 작품 크게 보기" data-title="Quiet Riot" data-desc="Graduation Show · 2025">
+        <div class="work-media">
+          <svg viewBox="0 0 900 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="900" height="700" fill="#B388FF"/>
+            <rect y="700" width="900" height="500" fill="#0A0A0A"/>
+            <circle cx="450" cy="700" r="250" fill="#FF4D2E"/>
+            <circle cx="450" cy="700" r="95" fill="#F3EFE6"/>
+            <text x="60" y="120" fill="#0A0A0A" font-family="Arial, sans-serif" font-size="24" letter-spacing="6">WORK 06 / 2025</text>
+            <text x="60" y="1070" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="90" font-weight="900" letter-spacing="-4">QUIET</text>
+            <text x="60" y="1155" fill="#F3EFE6" font-family="Arial, sans-serif" font-size="90" font-weight="900" letter-spacing="-4">RIOT</text>
+          </svg>
+        </div>
+        <figcaption><b>Quiet Riot</b><span>Graduation Show · 2025</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="skills" class="section skills">
+    <div class="section-head reveal">
+      <span class="index">03</span>
+      <h2>Skills &amp; Tools</h2>
+      <span class="head-note">Hands &amp; Digital</span>
+    </div>
+
+    <div class="skill-list reveal">
+      <div class="skill-row"><span class="skill-no">01</span><span class="skill-name">패턴 제작</span><span class="skill-note">Flat Pattern · Grading</span></div>
+      <div class="skill-row"><span class="skill-no">02</span><span class="skill-name">드레이핑</span><span class="skill-note">Draping · Toile</span></div>
+      <div class="skill-row"><span class="skill-no">03</span><span class="skill-name">봉제</span><span class="skill-note">Sewing · Finishing</span></div>
+      <div class="skill-row"><span class="skill-no">04</span><span class="skill-name">패션 일러스트</span><span class="skill-note">Illustration · Rendering</span></div>
+      <div class="skill-row"><span class="skill-no">05</span><span class="skill-name">CLO 3D</span><span class="skill-note">3D Garment Simulation</span></div>
+      <div class="skill-row"><span class="skill-no">06</span><span class="skill-name">Adobe Suite</span><span class="skill-note">Illustrator · Photoshop</span></div>
+      <div class="skill-row"><span class="skill-no">07</span><span class="skill-name">스타일링</span><span class="skill-note">Editorial · Lookbook</span></div>
+      <div class="skill-row"><span class="skill-no">08</span><span class="skill-name">디지털 텍스타일</span><span class="skill-note">Print · Surface Design</span></div>
+    </div>
+  </section>
+
+  <section id="education" class="section education">
+    <div class="section-head reveal">
+      <span class="index">04</span>
+      <h2>Education &amp; Experience</h2>
+      <span class="head-note">Journey</span>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <span class="timeline-year">2025</span>
+        <div class="timeline-desc">
+          <h3>졸업작품 패션쇼</h3>
+          <p>제로웨이스트 패턴과 업사이클링 소재를 결합한 캡슐 컬렉션을 선보였습니다.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2025</span>
+        <div class="timeline-desc">
+          <h3>패션 브랜드 인턴십</h3>
+          <p>시즌 룩북 스타일링과 샘플 피팅 보조, 소재 리서치 업무를 경험했습니다.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2024</span>
+        <div class="timeline-desc">
+          <h3>교내 패션쇼 스태프</h3>
+          <p>백스테이지 의상 관리와 런웨이 큐시트 운영을 담당했습니다.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2022</span>
+        <div class="timeline-desc">
+          <h3>의류학과 입학</h3>
+          <p>패턴, 드레이핑, 텍스타일 기초를 시작으로 의복 구성의 기반을 다졌습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <div class="section-head reveal">
+      <span class="index">05</span>
+      <h2>Contact</h2>
+      <span class="head-note">Let's Talk</span>
+    </div>
+
+    <div class="reveal">
+      <p class="contact-kicker">함께 만들 준비가 되어 있습니다.</p>
+      <a class="mail" href="mailto:haneulgoen@naver.com">haneulgoen@naver.com</a>
+      <div class="socials">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="인스타그램">Instagram ↗</a>
+        <a href="https://www.behance.net/" target="_blank" rel="noopener" aria-label="비핸스">Behance ↗</a>
+        <a href="https://www.notion.so/" target="_blank" rel="noopener" aria-label="노션 포트폴리오">Notion ↗</a>
+      </div>
+      <p class="contact-note">새로운 협업, 인턴십, 전시 제안을 기다립니다. 작업물과 함께 편하게 연락 주세요.</p>
+    </div>
+  </section>
+</main>
+
+<div class="to-top-bar">
+  <a class="to-top" href="#top">
+    <span>맨 위로 가기</span>
+    <span class="to-top-arrow" aria-hidden="true">↑</span>
+  </a>
+</div>
+
+<footer class="footer">
+  <span>© <span id="year">2026</span> Kim Haneul. All rights reserved.</span>
+  <span>Designed &amp; coded with care.</span>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="작품 크게 보기" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="닫기">✕</button>
+  <div class="lightbox-body"></div>
+  <p class="lightbox-caption"></p>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const revealTargets = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealTargets.forEach((el) => revealObserver.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxBody = lightbox.querySelector('.lightbox-body');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+  const closeButton = lightbox.querySelector('.lightbox-close');
+  const cards = document.querySelectorAll('.work-card');
+  let lastFocused = null;
+
+  function openLightbox(card) {
+    const source = card.querySelector('svg');
+    const clone = source.cloneNode(true);
+    clone.removeAttribute('aria-hidden');
+    clone.setAttribute('role', 'img');
+    clone.setAttribute('aria-label', card.dataset.title);
+
+    lightboxBody.replaceChildren(clone);
+    lightboxCaption.textContent = card.dataset.title + ' — ' + card.dataset.desc;
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-scroll');
+    lastFocused = card;
+    closeButton.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
+    if (lastFocused) lastFocused.focus();
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => openLightbox(card));
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(card);
+      }
+    });
+  });
+
+  closeButton.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+      closeLightbox();
+    }
+  });
+</script>
+</body>
+</html>
